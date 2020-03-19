@@ -4,7 +4,7 @@ app.use(express.static('public'));
 app.use(express.static('dashboard'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 15001;
 
 var lobbyUsers = {};
 var users = {};
@@ -31,7 +31,8 @@ io.on('connection', function(socket) {
 
         if (!users[userId]) {
             console.log('creating new user');
-            users[userId] = {userId: socket.userId, games:{}};
+            users[userId] = {userId: socket.userId, games:{}, socketVal: socket};
+            console.log("User: "+ userId+ " Socket: "+socket);
         } else {
             console.log('user found!');
             Object.keys(users[userId].games).forEach(function(gameId) {
@@ -100,6 +101,26 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('move', msg);
         activeGames[msg.gameId].board = msg.board;
         console.log(msg);
+    });
+
+    socket.on('msg',function(gameid,data){
+
+
+      var curGame = activeGames[gameid];
+      var opponent;
+      if(socket.userId == curGame.users.white)
+      {
+        opponent = curGame.users.black;
+      }
+      else {
+        opponent = curGame.users.white;
+      }
+
+      data.to=opponent;
+
+      console.log("Sending Message from userID: "+data.from+" Message: "+data.message+ " TO: "+opponent);
+
+      io.sockets.emit('new-msg',data);
     });
 
     socket.on('resign', function(msg) {

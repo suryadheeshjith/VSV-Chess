@@ -64,6 +64,15 @@
         removeUser(msg.username);
       });
 
+      socket.on('new-msg', function(packet){
+
+        if(packet.from==username || packet.to==username)
+        {
+          console.log("Received Message: "+packet.message+ " from - "+packet.from);
+          document.getElementById('chatty').innerHTML += '<div><b>' +
+               packet.from + '</b>: ' + packet.message + '</div>';
+        }
+      });
       //////////////////////////////
       // Menus
       //////////////////////////////
@@ -93,6 +102,19 @@
         $('#page-game').hide();
         $('#page-lobby').show();
       });
+
+      $('#sendmsg').on('click', function() {
+
+          var msg = $('#message').val();
+
+          if(msg.length > 0)
+          {
+            socket.emit('msg',serverGame.id,{message: msg, from: username});
+          }
+          console.log("Sending Message. GameID: "+serverGame.id+" Message: "+msg);
+          document.getElementById('message').value = "";
+      });
+
 
       var addUser = function(userId) {
         usersOnline.push(userId);
