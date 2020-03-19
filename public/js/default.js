@@ -1,5 +1,6 @@
 var board;
 var game;
+var socket = io();
 
 window.onload = function () {
     initGame();
@@ -14,27 +15,21 @@ var initGame = function() {
    
    board = new ChessBoard('gameBoard', cfg);
    game = new Chess();
+
+   board.position(game.fen())
 };
 
 var handleMove = function(source, target ) {
     var move = game.move({from: source, to: target});
-    
     if (move === null)  return 'snapback';
-    else
-    {
-        socket.emit("move",move);
-    }
+    var SAN = move.san
+    game.undo()
+    move = game.move(SAN)
+    board.position(game.fen());
+    socket.emit('move', move);
 };
 
-// setup my socket client
-var socket = io();
- 
-// window.onclick = function(e) {
-//     socket.emit('message', 'hello world!');
-// };
-
-socket.on("move",function(move){
-
-    game.move(move);
-    board.position(game.fen());//Update board state
+socket.on('move', function (msg) {
+    game.move(msg);
+    board.position(game.fen()); // fen is the board layout
 });

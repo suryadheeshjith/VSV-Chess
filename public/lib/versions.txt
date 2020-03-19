@@ -1,9 +1,0 @@
-Version of files : 
-
-{
-
-	chess.js ;
-	chessboard.js :
-	chessboard.css :
-
-}
