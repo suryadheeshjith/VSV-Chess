@@ -1,66 +1,206 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+
 body {
+	background-image: url('../img/chess_bg.jpg');
+	background-size: cover;
+	z-index: 0;
 	overflow-y: auto;
-	
 	display: flex;
 	flex-flow: column;
 	align-content: center;
 	align-items: center;
 }
 
-.page {
-	margin-top: 20px;
-}
+/************** LOGIN **************/
 
 .page-login {
 	display: flex;
 	flex-direction: column;
-}
-	
-	.page.login .logo {
-		display: block;
-		background-color: lightgray;
-		background-image: url('/img/chesslogo.jpg');
-		background-size: cover;
-		background-position: center center;
-
-		margin-bottom: 50px;	
-		
-		width: 350px;
-		height: 350px;
-	}
-	
-	.page.login button {
-		margin-left: 15px;
-		margin-bottom: 20px;
-		height: 35px;
-	}
-	
-	.page.login input {
-		margin-bottom: 20px;
-		width: 202px;
-		height: 25px;
-		font-size: 12pt;
-		padding: 2px;
-		
-		-webkit-border-radius: 5px;
-		-moz-border-radius: 5px;
-		border-radius: 5px; 
-	}
-
-	.page.lobby h2 {
-		color: darkgrey;
-	}
-
-	.page.lobby h3 {
-		margin-bottom: 10px;
-		margin-top: 40px;
-	}
-	
-.page.game button {
-	margin-bottom: 10px;	
+	align-items: center;
+	align-content: center;
+	margin-top: 250px; 
+	width: 500px;
+	height: 300px;
+	border-radius: 5rem;
+	background-color: rgba(9, 9, 9, 0.591);
+	padding-top: 50px;
 }
 
-#page-lobby{
+#login {
+	width: 260px;
+    height: 35px;
+	background: #fff;
+	border: 1px solid #fff;
+	cursor: pointer;
+	border-radius: 1rem;
+	color: #6c85a1;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 14px;
+}
+
+#username {
+	width: 250px;
+    height: 30px;
+    margin-top: 10px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
+
+#VSV {
+	color: #fff;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 65px;
+	font-weight: 200;
+}
+
+#Chess {
+	color: #5379fa !important;
+}
+
+/************** LOBBY **************/
+
+#page-lobby {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	text-align: center;
+	margin-top: 200px; 
+	width: fit-content;
+	height: fit-content;
+	border-radius: 5rem;
+	background-color: rgba(9, 9, 9, 0.851);
+	padding: 20px 100px 40px 100px;
+}
+
+#VSV2 {
+	color: #fff;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 65px;
+	font-weight: 200;
+	margin-bottom: 10px;
+}
+
+#Chess2 {
+	color: #5379fa !important;
+}
+
+.page-lobby h2 {
+	font-family: 'Roboto Mono', monospace;
+	color: rgb(242, 8, 8);
+}
+
+.page-lobby h3 {
+	font-family: 'Roboto Mono', monospace;
+	color: rgb(8, 247, 8);
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+#gamesList button{
+	width: 100;
+    height: 35px;
+	background: #fff;
+	border: 1px solid #fff;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	color: #000000;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#userList button{
+	width: 100;
+    height: 35px;
+	background: #fff;
+	border: 1px solid #fff;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	color: #000000;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/************** Board **************/
+
+#page-game {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	text-align: center;
+	margin-top: 100px; 
+	width: fit-content;
+	height: fit-content;
+	border-radius: 5rem;
+	background-color: rgba(9, 9, 9, 0.851);
+	padding: 20px 100px 40px 100px;
+}
+
+
+#game-back {
+	width: 100;
+    height: 35px;
+	background: #fff;
+	border: 1px solid #fff;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	color: #000000;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#game-resign {
+	width: 100;
+    height: 35px;
+	background: #fff;
+	border: 1px solid #fff;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	color: #000000;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#game-board{
+	margin-top: 50px;
+	margin-bottom: 80px;
+}
+
+
+/************** Miscellaneous **************/
+
+#page-lobby {
 	display: none;
 }
 
@@ -72,9 +212,9 @@ body {
 	background-color: green;
 	width: 30px;
 	height: 30px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px; 
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 }
 
 .circle.offline {
