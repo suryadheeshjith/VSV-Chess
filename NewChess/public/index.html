@@ -40,23 +40,43 @@
     </div>
   </div>
 
-
-
   <!-- *************** BOARD ************** -->
 
   <div class="page-game" id='page-game'>
-    <button id='game-back'>Lobby</button>
-    <button id='game-resign'>Resign</button>
-    <div id='game-board' style="width: 400px">
+
+    <div id="decorations">
+      <div class="header">
+        <div id="VSV3">VSV<span id="Chess3">Chess</span></div>
+      </div>
     </div>
 
-      <!-- ****** CHAT ******** -->
-
-    <div><br/><br/></div>
-    <div id="chatty"> CHAT </div>
-    <input type="text" id="message" size="50"/>
-    <button id="sendmsg"> Send </button>
-
+    <div id="container">
+      <div id="board">
+        <div id = "player1">
+          <div id="name1">Name</div>
+          <div id="timer1">Timer</div>
+        </div>
+        <div id='game-board' style="width: 450px"></div>
+        <div id = "player2">
+          <div id="name2">Name</div>
+           <div id="timer2">Timer</div>
+        </div>
+      </div>
+  
+      <div id="chat">
+        <div id="buttons">
+          <button id='game-back'>Lobby</button>
+          <button id='game-resign'>Resign</button>
+        </div>
+        <div id = "chatsection"><h3>Chat section</h3></div>
+        <div id="chatty"></div>
+        <div id = "typing">
+          <input type="text" id="message" size="50"/>
+          <button id="sendmsg"> Send </button>
+        </div> 
+      </div>
+    </div>
+    
   </div>
 
   <!-- *************** Scripts ************** -->
@@ -68,5 +88,4 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/default.js"></script>
 </body>
-
 </html>
