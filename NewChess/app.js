@@ -10,20 +10,19 @@ var lobbyUsers = {};
 var users = {};
 var activeGames = {};
 
-app.get('/', function(req, res) {
- res.sendFile(__dirname + '/public/default.html');
-
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/dashboard/', function(req, res) {
- res.sendFile(__dirname + '/dashboard/dashboard.html');
+app.get('/dashboard/', function (req, res) {
+    res.sendFile(__dirname + '/dashboard/dashboard.html');
 });
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     console.log('new connection ' + socket);
 
-    socket.on('login', function(userId) {
-       doLogin(socket, userId);
+    socket.on('login', function (userId) {
+        doLogin(socket, userId);
     });
 
     function doLogin(socket, userId) {
@@ -31,23 +30,29 @@ io.on('connection', function(socket) {
 
         if (!users[userId]) {
             console.log('creating new user');
-            users[userId] = {userId: socket.userId, games:{}, socketVal: socket};
-            console.log("User: "+ userId+ " Socket: "+socket);
+            users[userId] = {
+                userId: socket.userId,
+                games: {},
+                socketVal: socket
+            };
+            console.log("User: " + userId + " Socket: " + socket);
         } else {
             console.log('user found!');
-            Object.keys(users[userId].games).forEach(function(gameId) {
+            Object.keys(users[userId].games).forEach(function (gameId) {
                 console.log('gameid - ' + gameId);
             });
         }
-
-        socket.emit('login', {users: Object.keys(lobbyUsers),
-                              games: Object.keys(users[userId].games)});
+        
+        socket.emit('login', {
+            users: Object.keys(lobbyUsers),
+            games: Object.keys(users[userId].games)
+        });
         lobbyUsers[userId] = socket;
 
         socket.broadcast.emit('joinlobby', socket.userId);
     }
 
-    socket.on('invite', function(opponentId) {
+    socket.on('invite', function (opponentId) {
         console.log('got an invite from: ' + socket.userId + ' --> ' + opponentId);
 
         socket.broadcast.emit('leavelobby', socket.userId);
@@ -56,7 +61,10 @@ io.on('connection', function(socket) {
         var game = {
             id: Math.floor((Math.random() * 100) + 1),
             board: null,
-            users: {white: socket.userId, black: opponentId}
+            users: {
+                white: socket.userId,
+                black: opponentId
+            }
         };
 
         socket.gameId = game.id;
@@ -66,16 +74,28 @@ io.on('connection', function(socket) {
         users[game.users.black].games[game.id] = game.id;
 
         console.log('starting game: ' + game.id);
-        lobbyUsers[game.users.white].emit('joingame', {game: game, color: 'white'});
-        lobbyUsers[game.users.black].emit('joingame', {game: game, color: 'black'});
+
+        lobbyUsers[game.users.white].emit('joingame', {
+            game: game,
+            color: 'white',
+            oppon: game.users.black
+        });
+        lobbyUsers[game.users.black].emit('joingame', {
+            game: game,
+            color: 'black',
+            oppon: game.users.white
+        });
 
         delete lobbyUsers[game.users.white];
         delete lobbyUsers[game.users.black];
 
-        socket.broadcast.emit('gameadd', {gameId: game.id, gameState:game});
+        socket.broadcast.emit('gameadd', {
+            gameId: game.id,
+            gameState: game
+        });
     });
 
-     socket.on('resumegame', function(gameId) {
+    socket.on('resumegame', function (gameId) {
         console.log('ready to resume game: ' + gameId);
 
         socket.gameId = gameId;
@@ -86,44 +106,47 @@ io.on('connection', function(socket) {
 
         console.log('resuming game: ' + game.id);
         if (lobbyUsers[game.users.white]) {
-            lobbyUsers[game.users.white].emit('joingame', {game: game, color: 'white'});
+            lobbyUsers[game.users.white].emit('joingame', {
+                game: game,
+                color: 'white'
+            });
             delete lobbyUsers[game.users.white];
         }
 
         if (lobbyUsers[game.users.black]) {
             lobbyUsers[game.users.black] &&
-            lobbyUsers[game.users.black].emit('joingame', {game: game, color: 'black'});
+                lobbyUsers[game.users.black].emit('joingame', {
+                    game: game,
+                    color: 'black'
+                });
             delete lobbyUsers[game.users.black];
         }
     });
 
-    socket.on('move', function(msg) {
+    socket.on('move', function (msg) {
         socket.broadcast.emit('move', msg);
         activeGames[msg.gameId].board = msg.board;
         console.log(msg);
     });
 
-    socket.on('msg',function(gameid,data){
+    socket.on('msg', function (gameid, data) {
 
+        var curGame = activeGames[gameid];
+        var opponent;
+        if (socket.userId == curGame.users.white) {
+            opponent = curGame.users.black;
+        } else {
+            opponent = curGame.users.white;
+        }
 
-      var curGame = activeGames[gameid];
-      var opponent;
-      if(socket.userId == curGame.users.white)
-      {
-        opponent = curGame.users.black;
-      }
-      else {
-        opponent = curGame.users.white;
-      }
+        data.to = opponent;
 
-      data.to=opponent;
+        console.log("Sending Message from userID: " + data.from + " Message: " + data.message + " TO: " + opponent);
 
-      console.log("Sending Message from userID: "+data.from+" Message: "+data.message+ " TO: "+opponent);
-
-      io.sockets.emit('new-msg',data);
+        io.sockets.emit('new-msg', data);
     });
 
-    socket.on('resign', function(msg) {
+    socket.on('resign', function (msg) {
         console.log("resign: " + msg);
 
         delete users[activeGames[msg.gameId].users.white].games[msg.gameId];
@@ -134,34 +157,36 @@ io.on('connection', function(socket) {
     });
 
 
-    socket.on('disconnect', function(msg) {
+    socket.on('disconnect', function (msg) {
 
-      console.log(msg);
+        console.log(msg);
 
-      if (socket && socket.userId && socket.gameId) {
-        console.log(socket.userId + ' disconnected');
-        console.log(socket.gameId + ' disconnected');
-      }
+        if (socket && socket.userId && socket.gameId) {
+            console.log(socket.userId + ' disconnected');
+            console.log(socket.gameId + ' disconnected');
+        }
 
-      delete lobbyUsers[socket.userId];
+        delete lobbyUsers[socket.userId];
 
-      socket.broadcast.emit('logout', {
-        userId: socket.userId,
-        gameId: socket.gameId
-      });
+        socket.broadcast.emit('logout', {
+            userId: socket.userId,
+            gameId: socket.gameId
+        });
     });
 
     /////////////////////
     // Dashboard messages
     /////////////////////
 
-    socket.on('dashboardlogin', function() {
+    socket.on('dashboardlogin', function () {
         console.log('dashboard joined');
-        socket.emit('dashboardlogin', {games: activeGames});
+        socket.emit('dashboardlogin', {
+            games: activeGames
+        });
     });
 
 });
 
-http.listen(port, function() {
+http.listen(port, function () {
     console.log('listening on *: ' + port);
 });
