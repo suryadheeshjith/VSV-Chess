@@ -108,7 +108,9 @@ io.on('connection', function (socket) {
         if (lobbyUsers[game.users.white]) {
             lobbyUsers[game.users.white].emit('joingame', {
                 game: game,
-                color: 'white'
+                color: 'white',
+                oppon: game.users.black
+
             });
             delete lobbyUsers[game.users.white];
         }
@@ -117,7 +119,8 @@ io.on('connection', function (socket) {
             lobbyUsers[game.users.black] &&
                 lobbyUsers[game.users.black].emit('joingame', {
                     game: game,
-                    color: 'black'
+                    color: 'black',
+                    oppon: game.users.white
                 });
             delete lobbyUsers[game.users.black];
         }
