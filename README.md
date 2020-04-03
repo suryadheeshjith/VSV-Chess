@@ -12,7 +12,7 @@ Softwares Used :
 
 ### Architecture
 
-![Architecture](/Images/Architecture.png)
+<img src="Images/Architecture.png" alt="Architecture" width="600" height="400">
 
 
 ### Frontend
