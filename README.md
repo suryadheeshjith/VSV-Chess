@@ -1,7 +1,7 @@
 # VSV-Chess
 Online Multiplayer Chess Game
 
-Softwares Used :
+### Softwares Used :
 1. Front end : 
 * HTML
 * CSS
