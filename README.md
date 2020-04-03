@@ -16,3 +16,9 @@ Online Multiplayer Chess Game
 
 
 ### Frontend
+
+
+### Authors
+1. Surya Dheeshjith
+2. Varun Komperla
+3. Vishak Bharadwaj
