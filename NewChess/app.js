@@ -64,7 +64,8 @@ io.on('connection', function (socket) {
             users: {
                 white: socket.userId,
                 black: opponentId
-            }
+            },
+            chat: []
         };
 
         socket.gameId = game.id;
@@ -132,21 +133,32 @@ io.on('connection', function (socket) {
         console.log(msg);
     });
 
-    socket.on('msg', function (gameid, data) {
+    // socket.on('msg', function (gameid, data) {
 
-        var curGame = activeGames[gameid];
-        var opponent;
-        if (socket.userId == curGame.users.white) {
-            opponent = curGame.users.black;
-        } else {
-            opponent = curGame.users.white;
-        }
+    //     var curGame = activeGames[gameid];
+    //     var opponent;
+    //     if (socket.userId == curGame.users.white) {
+    //         opponent = curGame.users.black;
+    //     } else {
+    //         opponent = curGame.users.white;
+    //     }
 
-        data.to = opponent;
+    //     data.to = opponent;
 
-        console.log("Sending Message from userID: " + data.from + " Message: " + data.message + " TO: " + opponent);
+    //     activeGames[gameid]
 
-        io.sockets.emit('new-msg', data);
+    //     console.log("Sending Message from userID: " + data.from + " Message: " + data.message + " TO: " + opponent);
+
+    //     io.sockets.emit('new-msg', data);
+    // });
+
+
+    socket.on('msg', function (game) {
+
+        activeGames[game.id].chat = game.chat;
+        console.log("Sending message for gameID: "+game.id+"\nCurrent chat:-\n"+game.chat);
+        io.sockets.emit('new-msg', activeGames[game.id]);
+
     });
 
     socket.on('resign', function (msg) {
