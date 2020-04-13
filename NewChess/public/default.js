@@ -199,6 +199,7 @@
 
       $('#name2').text(username);
       $('#name1').text(oppon);
+      document.getElementById('chatty').innerHTML = '';
       for(i = 0; i<serverGame.chat.length; i++)
           {
             var name_msg = game.chat[i].split(':',2);
