@@ -200,9 +200,10 @@
       $('#name2').text(username);
       $('#name1').text(oppon);
       document.getElementById('chatty').innerHTML = '';
+      
       for(i = 0; i<serverGame.chat.length; i++)
           {
-            var name_msg = game.chat[i].split(':',2);
+            var name_msg = serverGame.chat[i].split(':',2);
             document.getElementById('chatty').innerHTML += '<div class="msg_bub">' +'<b>'+ name_msg[0] +'</b>: '
               + name_msg[1]+ '</div>';
           }
