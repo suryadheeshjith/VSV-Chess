@@ -42,7 +42,7 @@ io.on('connection', function (socket) {
                 console.log('gameid - ' + gameId);
             });
         }
-        
+
         socket.emit('login', {
             users: Object.keys(lobbyUsers),
             games: Object.keys(users[userId].games)
@@ -99,8 +99,12 @@ io.on('connection', function (socket) {
     socket.on('resumegame', function (gameId) {
         console.log('ready to resume game: ' + gameId);
 
+
         socket.gameId = gameId;
         var game = activeGames[gameId];
+
+        socket.broadcast.emit('leavelobby', game.users.white);
+        socket.broadcast.emit('leavelobby', game.users.black);
 
         users[game.users.white].games[game.id] = game.id;
         users[game.users.black].games[game.id] = game.id;
@@ -125,6 +129,7 @@ io.on('connection', function (socket) {
                 });
             delete lobbyUsers[game.users.black];
         }
+
     });
 
     socket.on('move', function (msg) {
