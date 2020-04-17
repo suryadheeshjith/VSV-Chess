@@ -55,15 +55,6 @@
       if (serverGame && msg.gameId === serverGame.id) {
         game.move(msg.move);
         board.position(game.fen());
-        if(game.in_checkmate()){
-          alert("CheckMate!!! You lost!!");
-        }
-        else if(game.in_stalemate()){
-          alert("Game draw due to Stalemate!!!");
-        }
-        else if(game.in_draw()){
-          alert("The Game has drawn!!!");
-        }
       }
     });
 
@@ -246,28 +237,8 @@
           gameId: serverGame.id,
           board: game.fen()
         });
-        
-        if(game.in_checkmate()){
-          alert("CheckMate!!! You win!!");
-        }
-        else if(game.in_stalemate()){
-          alert("Game draw due to Stalemate!!!");
-        }
-        else if(game.in_draw()){
-          alert("The Game has drawn!!!");
-        }
-
-        if(game.game_over()){
-          socket.emit('resign', {
-            userId: username,
-            gameId: serverGame.id
-          });
-    
-          socket.emit('login', username);
-          $('#page-game').hide();
-          $('#page-lobby').show();
-        }
       }
+
     };
 
     // update the board position after the piece snap
