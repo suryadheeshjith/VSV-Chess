@@ -33,7 +33,6 @@
 
     socket.on('resign', function (msg) {
       if (msg.gameId == serverGame.id) {
-
         socket.emit('login', username);
 
         $('#page-lobby').show();
@@ -119,6 +118,7 @@
     });
 
     $('#game-resign').on('click', function () {
+      
       socket.emit('resign', {
         userId: username,
         gameId: serverGame.id
@@ -135,12 +135,12 @@
       var msg_packet = "\n\n"+username + ": "+msg+"\n\n";
       if (msg.length > 0) {
         serverGame.chat.push(msg_packet);
-        
+
         // socket.emit('msg', serverGame.id, {
         //   message: msg,
         //   from: username
         // });
-        
+
         socket.emit('msg',serverGame)
 
       }
@@ -209,7 +209,7 @@
       $('#name2').text(username);
       $('#name1').text(oppon);
       document.getElementById('chatty').innerHTML = '';
-      
+
       for(i = 0; i<serverGame.chat.length; i++)
           {
             var name_msg = serverGame.chat[i].split(':',2);
@@ -246,7 +246,7 @@
           gameId: serverGame.id,
           board: game.fen()
         });
-        
+
         if(game.in_checkmate()){
           alert("CheckMate!!! You win!!");
         }
@@ -262,7 +262,7 @@
             userId: username,
             gameId: serverGame.id
           });
-    
+
           socket.emit('login', username);
           $('#page-game').hide();
           $('#page-lobby').show();
