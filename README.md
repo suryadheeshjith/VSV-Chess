@@ -21,15 +21,15 @@ Online Multiplayer Chess Game
 
 <img src="Images/login.png" alt="login" height="400">
 
-Login
+<div align="center">Login</div>
 
 <img src="Images/lobby.png" alt="lobby" height="400">
 
-Lobby
+<div align="center">Lobby</div>
 
 <img src="Images/game.png" alt="game" height="400">
 
-Chess Game
+<div align="center">Chess Game</div>
 
 
 For more information, check out my website [here](https://suryadheeshjith.tech/projects/2020-02-04-VSV_Chess/)
