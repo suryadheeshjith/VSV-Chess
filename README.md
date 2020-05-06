@@ -17,11 +17,11 @@ Online Multiplayer Chess Game
 
 ### Frontend
 
-<img src="Images/login.png" alt="Architecture" width="600" height="400">
+<img src="Images/login.png" alt="Architecture" height="400">
 
-<img src="Images/lobby.png" alt="Architecture" width="600" height="400">
+<img src="Images/lobby.png" alt="Architecture" height="400">
 
-<img src="Images/game.png" alt="Architecture" width="600" height="400">
+<img src="Images/game.png" alt="Architecture" height="400">
 
 
 For more information, check out my website [here](https://suryadheeshjith.tech/projects/2020-02-04-VSV_Chess/)
